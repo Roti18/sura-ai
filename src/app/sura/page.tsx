@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Trash2,
 } from "lucide-react";
+import Link from "next/link";
 
 type Message = {
   role: "user" | "assistant";
@@ -138,11 +139,9 @@ export default function SuraChat() {
 
     try {
       const res = await fetch("/api/chat", {
-        // ✅ Pakai internal API
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // ✅ Tidak perlu X_CLIENT_KEY lagi karena internal
         },
         body: JSON.stringify({ question }),
       });
@@ -350,7 +349,7 @@ export default function SuraChat() {
                 )}
               </div>
             </button>
-            <div className="flex items-center gap-3 min-w-0">
+            <Link href={"/"} className="flex items-center gap-3 min-w-0">
               <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
                 <Brain className="w-4 h-4 text-white" />
               </div>
@@ -359,7 +358,7 @@ export default function SuraChat() {
                   SURA AI
                 </h1>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="hidden sm:flex items-center gap-3 flex-shrink-0">
             <div className="text-sm text-gray-400 bg-white/5 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">
