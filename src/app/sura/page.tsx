@@ -137,17 +137,19 @@ export default function SuraChat() {
     setShowSuggestions(false);
 
     try {
-      const res = await fetch("/api/sura", {
+      const res = await fetch("/api/chat", {
+        // ✅ Pakai internal API
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Client-Key": process.env.NEXT_PUBLIC_CLIENT_KEY || "",
+          // ✅ Tidak perlu X_CLIENT_KEY lagi karena internal
         },
         body: JSON.stringify({ question }),
       });
 
       if (!res.ok) {
-        throw new Error("Gagal menghubungi server");
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Gagal menghubungi server");
       }
 
       const data = await res.json();
@@ -163,10 +165,13 @@ export default function SuraChat() {
         setTimeout(() => saveCurrentChat(), 100);
         return updatedMessages;
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Error calling internal chat API:", error);
+
       const errorMessage: Message = {
         role: "assistant",
         content:
+          error.message ||
           "Terjadi kesalahan saat menghubungi server. Silakan coba lagi.",
         timestamp: new Date(),
       };

@@ -10,11 +10,6 @@
     "output": "Istana baru dibangun megah pakai uang utang, sementara sekolah di pelosok masih mau rubuh dan BPJS nunggak. Ini proyek buat memindahkan pusat kekuasaan, bukan buat memindahkan kesejahteraan rakyat."
   },
   {
-    "instruction": "Berikan pandangan kritis kenapa impor pangan terus terjadi saat petani lokal menjerit.",
-    "input": "Topik: Kebijakan Impor Pangan",
-    "output": "Katanya mau swasembada, tapi keran impor lebih deras dari air irigasi. Petani disuruh menanam, tapi saat panen dihantam produk luar. Swasembada angan-angan, yang untung ya para pemburu rente."
-  },
-  {
     "instruction": "Gunakan perumpamaan untuk mengkritik netralitas aparat negara saat tahun politik.",
     "input": "Topik: Netralitas Aparat Negara",
     "output": "Aparat itu seharusnya kayak wasit di lapangan, adil ke semua tim. Tapi sekarang banyak yang lebih mirip jadi pemain ke-12, ikut oper-operan bola buat menangkan satu pihak."
@@ -23,5 +18,15 @@
     "instruction": "Sindiri fenomena korupsi yang masih marak meski sudah ada KPK.",
     "input": "Topik: Korupsi di Indonesia",
     "output": "KPK itu kayak pemadam kebakaran yang datang terlambat. Api korupsi sudah membara, sementara mereka masih sibuk mencari sumber air. Padahal, kalau mau, bisa saja matikan api itu dari akarnya."
+  },
+  {
+    "instruction": "Deskripsikan budaya Indonesia menggunakan bahasa yang informatif dan menarik.",
+    "input": "Topik: Batik",
+    "output": "Batik adalah seni kain tradisional Indonesia yang terkenal dengan motif-motifnya yang rumit dan penuh filosofi. Setiap daerah memiliki corak khasnya sendiri, misalnya Batik Solo yang halus dan Batik Pekalongan yang penuh warna. Batik sering digunakan dalam acara adat, upacara resmi, dan kini juga dalam fashion modern."
+  },
+  {
+    "instruction": "Deskripsikan budaya Indonesia menggunakan bahasa yang informatif dan menarik.",
+    "input": "Topik: Tari Saman",
+    "output": "Tari Saman berasal dari Aceh dan terkenal dengan gerakan cepat, kompak, dan ritmis. Biasanya ditampilkan oleh sekelompok penari laki-laki yang duduk berjajar sambil menepuk tangan dan dada mengikuti irama. Tari ini sering dipentaskan pada acara adat, peringatan hari besar, dan sebagai simbol kebersamaan masyarakat Aceh."
   }
 ]

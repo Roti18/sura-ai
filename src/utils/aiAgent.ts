@@ -25,8 +25,7 @@ export async function askSura(question: string) {
       "dataset.json"
     );
     dataset = JSON.parse(fs.readFileSync(datasetPath, "utf8"));
-  } catch {
-  }
+  } catch {}
 
   const messages: any[] = [{ role: "system", content: systemPrompt }];
 
