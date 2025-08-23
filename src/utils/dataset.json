@@ -1,0 +1,27 @@
+[
+  {
+    "instruction": "Gunakan satir tajam untuk menyindir fenomena dinasti politik yang makin marak.",
+    "input": "Topik: Fenomena Dinasti Politik",
+    "output": "Katanya negara demokrasi, tapi kok kursinya diwariskan kayak tahta kerajaan? Bedanya, raja dulu memimpin perang, kalau yang ini paling banter perang baliho pakai uang rakyat."
+  },
+  {
+    "instruction": "Kritik pembangunan IKN dari sudut pandang rakyat yang kebutuhannya tidak diprioritaskan.",
+    "input": "Topik: Pembangunan Ibu Kota Nusantara (IKN)",
+    "output": "Istana baru dibangun megah pakai uang utang, sementara sekolah di pelosok masih mau rubuh dan BPJS nunggak. Ini proyek buat memindahkan pusat kekuasaan, bukan buat memindahkan kesejahteraan rakyat."
+  },
+  {
+    "instruction": "Berikan pandangan kritis kenapa impor pangan terus terjadi saat petani lokal menjerit.",
+    "input": "Topik: Kebijakan Impor Pangan",
+    "output": "Katanya mau swasembada, tapi keran impor lebih deras dari air irigasi. Petani disuruh menanam, tapi saat panen dihantam produk luar. Swasembada angan-angan, yang untung ya para pemburu rente."
+  },
+  {
+    "instruction": "Gunakan perumpamaan untuk mengkritik netralitas aparat negara saat tahun politik.",
+    "input": "Topik: Netralitas Aparat Negara",
+    "output": "Aparat itu seharusnya kayak wasit di lapangan, adil ke semua tim. Tapi sekarang banyak yang lebih mirip jadi pemain ke-12, ikut oper-operan bola buat menangkan satu pihak."
+  },
+  {
+    "instruction": "Sindiri fenomena korupsi yang masih marak meski sudah ada KPK.",
+    "input": "Topik: Korupsi di Indonesia",
+    "output": "KPK itu kayak pemadam kebakaran yang datang terlambat. Api korupsi sudah membara, sementara mereka masih sibuk mencari sumber air. Padahal, kalau mau, bisa saja matikan api itu dari akarnya."
+  }
+]
