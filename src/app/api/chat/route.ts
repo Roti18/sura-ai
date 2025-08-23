@@ -12,8 +12,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Langsung panggil askSura tanpa perlu header validation
-    // karena ini sudah internal API
     const answer = await askSura(question);
 
     return NextResponse.json({
