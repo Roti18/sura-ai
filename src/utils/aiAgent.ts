@@ -38,7 +38,7 @@ export async function askSura(
     });
   }
 
-  if (chatCounter[userEmail] >= 25) {
+  if (chatCounter[userEmail] >= 15) {
     const email20x = buildEmail({
       to: userEmail,
       subject: "❌ Limit Chat Tercapai",

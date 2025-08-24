@@ -66,35 +66,4 @@ export async function POST(req: NextRequest) {
       },
     });
   }
-
-  try {
-    const answer = await askSura(question);
-    return new Response(
-      JSON.stringify({
-        answer,
-        status: "success",
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  } catch (error: any) {
-    console.error("Error calling askSura:", error);
-    return new Response(
-      JSON.stringify({
-        error: "Terjadi kesalahan internal server",
-        details:
-          process.env.NODE_ENV === "development" ? error.message : undefined,
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
 }
