@@ -1,5 +1,6 @@
 "use client";
 
+export const dynamic = "force-dynamic";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Brain, Github, Chrome } from "lucide-react";
