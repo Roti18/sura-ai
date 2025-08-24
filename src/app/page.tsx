@@ -98,7 +98,7 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md sm:max-w-none sm:justify-center items-center">
             <Link
-              href="/sura"
+              href="/chat"
               className="group bg-gradient-to-r from-red-600 to-red-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-2xl hover:shadow-red-500/25 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
             >
               Mulai Sekarang

@@ -1,17 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import {
-  Brain,
-  User,
-  Sparkles,
-  Send,
-  Menu,
-  Plus,
-  MessageSquare,
-  Trash2,
-} from "lucide-react";
+import { Brain, User, Sparkles, Send, Menu } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import SidebarChat from "@/components/SideBarChat";
 
 type Message = {
   role: "user" | "assistant";
@@ -34,6 +28,7 @@ const suggestions = [
 ];
 
 export default function SuraChat() {
+  // SEMUA HOOKS HARUS DI ATAS SEBELUM CONDITIONAL LOGIC
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
@@ -41,8 +36,19 @@ export default function SuraChat() {
   const [chatHistory, setChatHistory] = useState<ChatHistory[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const chatEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  // SEMUA useEffect JUGA HARUS DI ATAS SEBELUM CONDITIONAL
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?from=chat");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -55,6 +61,19 @@ export default function SuraChat() {
         Math.min(textareaRef.current.scrollHeight, 200) + "px";
     }
   }, [input]);
+
+  // BARU SETELAH INI BOLEH ADA CONDITIONAL RENDERING
+  if (status === "loading") {
+    return (
+      <div className="h-screen flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return null;
+  }
 
   const generateChatTitle = (firstMessage: string) => {
     return firstMessage.length > 30
@@ -192,28 +211,6 @@ export default function SuraChat() {
     });
   };
 
-  const formatChatDate = (date: Date) => {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-    const chatDate = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    );
-
-    if (chatDate.getTime() === today.getTime()) {
-      return "Hari ini";
-    } else if (chatDate.getTime() === yesterday.getTime()) {
-      return "Kemarin";
-    } else {
-      return date.toLocaleDateString("id-ID", {
-        day: "2-digit",
-        month: "short",
-      });
-    }
-  };
-
   return (
     <div className="flex h-screen bg-black text-white relative overflow-hidden">
       {/* Background Effects */}
@@ -221,113 +218,16 @@ export default function SuraChat() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent -z-10"></div>
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-red-800/5 via-transparent to-transparent -z-10"></div>
 
-      {/* Mobile Sidebar Overlay - Only show on mobile when sidebar is open */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed w-64 h-full bg-black/40 backdrop-blur-xl border-r border-white/10 flex flex-col z-50`}
-      >
-        {/* Mobile Close Button */}
-        <div className="md:hidden flex justify-end p-4">
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="p-2 hover:bg-white/10 rounded-lg backdrop-blur-sm transition-all duration-200"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Sidebar Header */}
-        <div className="p-4 border-b border-white/10">
-          <button
-            onClick={startNewChat}
-            className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-red-400/30 transition-all duration-200 group"
-          >
-            <Plus className="w-4 h-4 text-gray-300 group-hover:text-red-400" />
-            <span className="text-sm font-medium text-gray-300 group-hover:text-white">
-              Chat Baru
-            </span>
-          </button>
-        </div>
-
-        {/* Chat History */}
-        <div className="flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-          <div className="space-y-1">
-            {chatHistory.map((chat) => (
-              <div
-                key={chat.id}
-                onClick={() => loadChat(chat.id)}
-                className={`group relative p-3 rounded-xl cursor-pointer transition-all duration-200 backdrop-blur-sm border ${
-                  currentChatId === chat.id
-                    ? "bg-red-600/20 border-red-400/30 text-white"
-                    : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-red-400/20 text-gray-300"
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <MessageSquare className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">
-                      {chat.title}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {formatChatDate(chat.lastUpdated)}
-                    </div>
-                  </div>
-                  <button
-                    onClick={(e) => deleteChat(chat.id, e)}
-                    className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-600/20 rounded transition-all duration-200"
-                  >
-                    <Trash2 className="w-3 h-3 text-red-400" />
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {chatHistory.length === 0 && (
-              <div className="text-center text-gray-500 py-8">
-                <MessageSquare className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">Belum ada riwayat chat</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Sidebar Footer */}
-        <div className="p-4 border-t border-white/10">
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="relative">
-              <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-lg">
-                <Brain className="w-4 h-4 text-white" />
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-black"></div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-white">SURA AI</div>
-              <div className="text-xs text-green-400">Online</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Sidebar Component */}
+      <SidebarChat
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        chatHistory={chatHistory}
+        currentChatId={currentChatId}
+        startNewChat={startNewChat}
+        loadChat={loadChat}
+        deleteChat={deleteChat}
+      />
 
       {/* Main Chat Area */}
       <div
@@ -435,7 +335,15 @@ export default function SuraChat() {
                           </div>
                         ) : (
                           <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-600/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
-                            <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                            {session?.user?.image ? (
+                              <img
+                                src={session.user.image}
+                                alt={session.user.name || "User"}
+                                className="w-full h-full rounded-full object-cover"
+                              />
+                            ) : (
+                              <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                            )}
                           </div>
                         )}
                       </div>
@@ -443,7 +351,9 @@ export default function SuraChat() {
                       {/* Message Content */}
                       <div className="flex-1 min-w-0">
                         <div className="text-xs sm:text-sm font-medium text-gray-300 mb-2">
-                          {msg.role === "assistant" ? "SURA AI" : "Anda"}
+                          {msg.role === "assistant"
+                            ? "SURA AI"
+                            : session?.user?.name || "Anda"}
                         </div>
                         <div className="prose prose-invert max-w-none">
                           <p className="text-sm sm:text-base text-gray-100 leading-relaxed whitespace-pre-wrap">
